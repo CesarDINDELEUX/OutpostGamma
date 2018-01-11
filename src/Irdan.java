@@ -1,2 +1,3 @@
-public class Irdan {
+public class Irdan extends Personnage {
+
 }
