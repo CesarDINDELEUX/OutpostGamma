@@ -5,5 +5,6 @@ public class Personnage {
     int distanceDeplacement;
     int ptDefense;
     int ptAttaque;
+    Position pos;
 }
 
