@@ -26,18 +26,18 @@ public class Board {
     final static Color COLOURTWO = new Color(0,0,0,200);
     final static Color COLOURTWOTXT = new Color(255,100,255);
     final static int EMPTY = 0;
-    final static int BSIZE = 22; //board size.
-    final static int HEXSIZE = 66;	//hex size in pixels
+    final static int BSIZE = 22;
+    final static int HEXSIZE = 66;
     final static int BORDERS = 30;
-    final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
+    final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
 
     int[][] board = new int[BSIZE][BSIZE];
 
     void initGame(){
 
-        Hex.setXYasVertex(false); //RECOMMENDED: leave this as FALSE.
+        Hex.setXYasVertex(false);
 
-        Hex.setHeight(HEXSIZE); //Either setHeight or setSize must be run to initialize the hex
+        Hex.setHeight(HEXSIZE);
         Hex.setBorders(BORDERS);
 
         for (int i=0;i<BSIZE;i++) {
@@ -59,13 +59,10 @@ public class Board {
         DrawingPanel panel = new DrawingPanel();
 
 
-        //JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("com.company.Hex Testing 4");
+        JFrame frame = new JFrame("Outpost GAMMA");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
-        //this.add(panel);  -- cannot be done in a static context
-        //for hexes in the FLAT orientation, the height of a 10x10 grid is 1.1764 * the width. (from h / (s+t))
         frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
         frame.setResizable(false);
         frame.setLocationRelativeTo( null );
@@ -75,8 +72,6 @@ public class Board {
 
     class DrawingPanel extends JPanel
     {
-        //mouse variables here
-        //Point mPt = new Point(0,0);
 
         public DrawingPanel()
         {
@@ -101,36 +96,22 @@ public class Board {
             //fill in hexes
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    //if (board[i][j] < 0) hexmech.fillHex(i,j,COLOURONE,-board[i][j],g2);
-                    //if (board[i][j] > 0) hexmech.fillHex(i,j,COLOURTWO, board[i][j],g2);
                     Hex.fillHex(i,j,board[i][j],g2);
                 }
             }
-
-            //g.setColor(Color.RED);
-            //g.drawLine(mPt.x,mPt.y, mPt.x,mPt.y);
         }
 
-        class MyMouseListener extends MouseAdapter	{	//inner class inside DrawingPanel
+        class MyMouseListener extends MouseAdapter	{
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-                //mPt.x = x;
-                //mPt.y = y;
                 Point p = new Point( Hex.pxtoHex(e.getX(),e.getY()) );
                 if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE) return;
-
-                //DEBUG: colour in the hex which is supposedly the one clicked on
-                //clear the whole screen first.
-				/* for (int i=0;i<BSIZE;i++) {
-					for (int j=0;j<BSIZE;j++) {
-						board[i][j]=EMPTY;
-					}
-				} */
-
-                //What do you want to do when a hexagon is clicked?
-                board[p.x][p.y] = (int)'X';
-                repaint();
+                board[(p.x)][(p.y)] = (int)'X';
+                String str = "X: " + p.x + " | " + "Y: " + p.y;
+                JOptionPane.showMessageDialog(null,
+                        str);
+               // repaint();
             }
         }
 

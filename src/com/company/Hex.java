@@ -5,29 +5,18 @@ import java.awt.*;
 
 public class Hex
 {
-  /* Helpful references:
+/* Les sources d'aide:
 http://www.codeproject.com/Articles/14948/Hexagonal-grid-for-games-and-other-projects-Part-1
 http://weblogs.java.net/blog/malenkov/archive/2009/02/hexagonal_tile.html
 http://www.tonypa.pri.ee/tbw/tut25.html
-	 */
+*/
 
-	/*
-#define HEXEAST 0
-#define HEXSOUTHEAST 1
-#define HEXSOUTHWEST 2
-#define HEXWEST 3
-#define HEXNORTHWEST 4
-#define HEXNORTHEAST 5
-	 */
 
-    //Constants
     public final static boolean orFLAT= true;
     public final static boolean orPOINT= false;
     public static boolean ORIENT= orFLAT;  //this is not used. We're never going to do pointy orientation
 
     public static boolean XYVertex=true;	//true: x,y are the co-ords of the first vertex.
-    //false: x,y are the co-ords of the top left rect. co-ord.
-
     private static int BORDERS=50;	//default number of pixels for the border.
 
     private static int s=0;	// length of one side
