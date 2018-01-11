@@ -1,2 +1,8 @@
-public class Position {
+public class Position
+{
+    int x;
+    int y;
+
+
+
 }

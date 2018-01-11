@@ -4,5 +4,4 @@ public class Tempete {
     String Direction;
     String Mouvement;
     int Radius;
-
 }
