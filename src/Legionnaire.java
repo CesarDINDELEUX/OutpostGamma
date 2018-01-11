@@ -1,2 +1,3 @@
-public class Legionnaire {
+public class Legionnaire extends Personnage{
+    enum type {Infantery, SoldatLourd, Commandant}
 }
