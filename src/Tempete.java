@@ -1,6 +1,5 @@
 public class Tempete {
 
-
     int Magnitude;
     String Direction;
     String Mouvement;

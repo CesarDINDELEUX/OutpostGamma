@@ -1,2 +1,6 @@
-public class Legionnaire {
+public class Legionnaire extends Personnage
+{
+
+
+
 }
