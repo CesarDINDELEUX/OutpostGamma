@@ -1,5 +1,8 @@
 package com.company;
 
+import com.sun.deploy.panel.ControlPanel;
+import com.sun.glass.ui.Accessible;
+
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
@@ -15,6 +18,7 @@ public class Board {
     public Board() {
         initGame();
         createAndShowGUI();
+
     }
 
     //constants and global variables
@@ -47,12 +51,24 @@ public class Board {
         }
 
         //set up board here
-        board[3][3] = (int)'A';
-        board[4][3] = (int)'Q';
-        board[4][4] = -(int)'B';
+      // board[3][3] = (int)'A';
+      //  board[4][3] = (int)'Q';
+      //  board[4][4] = -(int)'B';
     }
 
+    public class Object extends JFrame
+    {
+        private JPanel panel = new JPanel();
+        private JButton btn = new JButton("Submit");
 
+
+        public Object()
+        {
+
+            btn.setSize(300, 15);
+            btn.setVisible(true);
+        }
+    }
 
     private void createAndShowGUI()
     {
@@ -64,10 +80,12 @@ public class Board {
         Container content = frame.getContentPane();
         content.add(panel);
         frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
     }
+
+
 
 
     class DrawingPanel extends JPanel
