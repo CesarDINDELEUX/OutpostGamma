@@ -4,6 +4,10 @@ import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.io.File;
 
 public class Board {
 
@@ -11,6 +15,7 @@ public class Board {
     List<Irdan> listeIrdan;
     List<Legionnaire> listeLegionnaire;
     List<Tempete> listeTempete;
+    private Image map;
 
     public Board() {
         initGame();
@@ -31,6 +36,9 @@ public class Board {
     final static int BORDERS = 30;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
 
+
+
+
     int[][] board = new int[BSIZE][BSIZE];
 
     void initGame(){
@@ -47,9 +55,9 @@ public class Board {
         }
 
         //set up board here
-        board[3][3] = (int)'A';
-        board[4][3] = (int)'Q';
-        board[4][4] = -(int)'B';
+      //  board[3][3] = (int)'A';
+      //  board[4][3] = (int)'Q';
+      //  board[4][4] = -(int)'B';
     }
 
 
@@ -57,14 +65,12 @@ public class Board {
     private void createAndShowGUI()
     {
         DrawingPanel panel = new DrawingPanel();
-
-
         JFrame frame = new JFrame("Outpost GAMMA");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
         frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
     }
@@ -72,13 +78,16 @@ public class Board {
 
     class DrawingPanel extends JPanel
     {
+        Image image;
 
         public DrawingPanel()
         {
             setBackground(COLOURBACK);
+            image=(new javax.swing.ImageIcon(getClass().getResource("board.png"))).getImage();
 
             MyMouseListener ml = new MyMouseListener();
             addMouseListener(ml);
+
         }
 
         public void paintComponent(Graphics g)
@@ -86,19 +95,30 @@ public class Board {
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g2.drawImage(image, 0, 0,null);
             super.paintComponent(g2);
-            //draw grid
-            for (int i=0;i<BSIZE;i++) {
+            ImageIcon image_background = new ImageIcon(getClass().getResource("board.png"));
+
+           // Image image = image_background.getImage(); // transform it
+           // Image newImg = image.getScaledInstance(800, 600,  Image.SCALE_SMOOTH); // scale it the smooth way
+           // ImageIcon lol = new ImageIcon(newImg);  // transform it back
+
+
+
+            g.drawImage(image_background.getImage(), 0, 0, getWidth(), getHeight(), this);
+
+            //Dessiner les hex
+           /* for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
                     Hex.drawHex(i,j,g2);
                 }
             }
-            //fill in hexes
+            //Remplir les hex
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
                     Hex.fillHex(i,j,board[i][j],g2);
                 }
-            }
+            } */
         }
 
         class MyMouseListener extends MouseAdapter	{
