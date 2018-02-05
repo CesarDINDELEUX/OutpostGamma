@@ -1,15 +1,36 @@
 package com.company;
 
+import sun.net.dns.ResolverConfiguration;
+
+import java.beans.DesignMode;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JToolBar;
+import javax.swing.JComboBox;
+import javax.swing.JTextPane;
+import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.KeyStroke;
+import javax.swing.border.BevelBorder;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.text.html.Option;
 import java.io.File;
 
-public class Board {
+ class Board extends Panel{
 
     List<Hex> listeHex;
     List<Irdan> listeIrdan;
@@ -55,9 +76,9 @@ public class Board {
         }
 
         //set up board here
-      //  board[3][3] = (int)'A';
-      //  board[4][3] = (int)'Q';
-      //  board[4][4] = -(int)'B';
+        //  board[3][3] = (int)'A';
+        //  board[4][3] = (int)'Q';
+        //  board[4][4] = -(int)'B';
     }
 
 
@@ -69,12 +90,96 @@ public class Board {
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
+
+
+        DrawingPanel panelMenu = new DrawingPanel();
+        JFrame frameMenu = new JFrame();
+        Container con = frameMenu.getContentPane();
+        JOptionPane optionPane = new JOptionPane();
+        Object[] options = {"Irdans",
+                "Impériaux",
+                };
+        int result =   optionPane.showOptionDialog(frame,
+            "Le joueur 1 Choisit son équipe le joueur 2 aura l'autre",
+                   "Débuter la partie",
+                   optionPane.YES_NO_OPTION,
+                   optionPane.QUESTION_MESSAGE,
+                   null,
+                   options,
+                   options[0]);
+        con.add(panelMenu);
+
+
+
+
+
+            if (result == JOptionPane.NO_OPTION) {
+                JMenuBar menuBar = new JMenuBar();
+                frame.setJMenuBar(menuBar);
+                JMenu Menu = new JMenu("Menu");
+
+                JMenu Unites = new JMenu("Unités");
+                JMenuItem Infantery = new JMenuItem("Infantery");
+                JMenuItem Lourd = new JMenuItem("Soldat Lourd");
+                JMenuItem Commandant = new JMenuItem("Commandant");
+
+                Unites.add(Infantery);
+                Unites.add(Lourd);
+                Unites.add(Commandant);
+
+                JMenu Position = new JMenu("Positions");
+                JMenuItem Avance = new JMenuItem("Position Avancée");
+                JMenuItem Fortifie = new JMenuItem("Position Fortifié");
+
+                Position.add(Avance);
+                Position.add(Fortifie);
+
+                JMenuItem end = new JMenuItem("Game Turn");
+
+                Menu.add(Unites);
+                Menu.add(Position);
+                Menu.add(end);
+                menuBar.add(Menu);
+            }
+            else
+                {
+                    JMenuBar menuBar = new JMenuBar();
+                    frame.setJMenuBar(menuBar);
+                    JMenu Menu = new JMenu("Menu");
+                    JMenuItem end = new JMenuItem("Game turn");
+
+                   JMenu Unites = new JMenu("Unités");
+                    JMenuItem Irdan = new JMenuItem("Irdan rebelle");
+                    JMenuItem shooter = new JMenuItem("Irdan Shooter");
+                    JMenuItem leader = new JMenuItem(" Irdan Leader");
+
+
+                    Unites.add(Irdan);
+                    Unites.add(shooter);
+                    Unites.add(leader);
+
+                    Menu.add(Unites);
+                    Menu.add(end);
+                    menuBar.add(Menu);
+                }
+
+
+
+
         frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
         frame.setResizable(true);
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
     }
 
+    class menuaction extends  AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+        public menuaction(Icon icon){
+        }
+    }
 
     class DrawingPanel extends JPanel
     {
@@ -99,9 +204,9 @@ public class Board {
             super.paintComponent(g2);
             ImageIcon image_background = new ImageIcon(getClass().getResource("board.png"));
 
-           // Image image = image_background.getImage(); // transform it
-           // Image newImg = image.getScaledInstance(800, 600,  Image.SCALE_SMOOTH); // scale it the smooth way
-           // ImageIcon lol = new ImageIcon(newImg);  // transform it back
+            // Image image = image_background.getImage(); // transform it
+            // Image newImg = image.getScaledInstance(800, 600,  Image.SCALE_SMOOTH); // scale it the smooth way
+            // ImageIcon lol = new ImageIcon(newImg);  // transform it back
 
 
 
@@ -131,7 +236,7 @@ public class Board {
                 String str = "X: " + p.x + " | " + "Y: " + p.y;
                 JOptionPane.showMessageDialog(null,
                         str);
-               // repaint();
+                // repaint();
             }
         }
 
