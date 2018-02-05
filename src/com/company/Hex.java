@@ -11,13 +11,12 @@ http://weblogs.java.net/blog/malenkov/archive/2009/02/hexagonal_tile.html
 http://www.tonypa.pri.ee/tbw/tut25.html
 */
 
-
     public final static boolean orFLAT= true;
     public final static boolean orPOINT= false;
     public static boolean ORIENT= orFLAT;  //this is not used. We're never going to do pointy orientation
 
     public static boolean XYVertex=true;	//true: x,y are the co-ords of the first vertex.
-    private static int BORDERS=50;	//default number of pixels for the border.
+    private static int BORDERS=1;	//default number of pixels for the border.
 
     private static int s=0;	// length of one side
     private static int t=0;	// short side of 30o triangle outside of each hex
@@ -34,17 +33,17 @@ http://www.tonypa.pri.ee/tbw/tut25.html
     /** This functions takes the Side length in pixels and uses that as the basic dimension of the hex.
      It calculates all other needed constants from this dimension.
      */
-    public static void setSide(int side) {
+    /*public static void setSide(int side) {
         s=side;
         t =  (int) (s / 2);			//t = s sin(30) = (int) CalculateH(s);
         r =  (int) (s * 0.8660254037844);	//r = s cos(30) = (int) CalculateR(s);
         h=2*r;
-    }
+    }*/
     public static void setHeight(int height) {
         h = height;			// h = basic dimension: height (distance between two adj centresr aka size)
         r = h/2;			// r = radius of inscribed circle
-        s = (int) (h / 1.73205);	// s = (h/2)/cos(30)= (h/2) / (sqrt(3)/2) = h / sqrt(3)
-        t = (int) (r / 1.73205);	// t = (h/2) tan30 = (h/2) 1/sqrt(3) = h / (2 sqrt(3)) = r / sqrt(3)
+        s = (int) (h / 1.41);	// s = (h/2)/cos(30)= (h/2) / (sqrt(3)/2) = h / sqrt(3)
+        t = (int) (r / 1.41);	// t = (h/2) tan30 = (h/2) 1/sqrt(3) = h / (2 sqrt(3)) = r / sqrt(3)
     }
 
     /*********************************************************
@@ -60,8 +59,8 @@ http://www.tonypa.pri.ee/tbw/tut25.html
      *********************************************************/
     public static Polygon hex (int x0, int y0) {
 
-        int y = y0 + BORDERS;
-        int x = x0 + BORDERS; // + (XYVertex ? t : 0); //Fix added for XYVertex = true.
+        int y = y0 - 18 ;
+        int x = x0 - 5  ; // + (XYVertex ? t : 0); //Fix added for XYVertex = true.
         // NO! Done below in cx= section
         if (s == 0  || h == 0) {
             System.out.println("ERROR: size of hex has not been set");
@@ -78,17 +77,6 @@ http://www.tonypa.pri.ee/tbw/tut25.html
 
         cy = new int[] {y,y,y+r,y+r+r,y+r+r,y+r};
         return new Polygon(cx,cy,6);
-
-		/*
-		   x=200;
-		   poly = new Polygon();
-		   poly.addPoint(x,y);
-		   poly.addPoint(x+s,y);
-		   poly.addPoint(x+s+t,y+r);
-		   poly.addPoint(x+s,y+r+r);
-		   poly.addPoint(x,y+r+r);
-		   poly.addPoint(x-t,y+r);
-		 */
     }
 
     /********************************************************************
@@ -138,7 +126,7 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         }
         if (n > 0) {
             g2.setColor(Board.COLOURTWO);
-            g2.fillPolygon(hex(x,y));
+            //g2.fillPolygon(hex(x,y));
             g2.setColor(Board.COLOURTWOTXT);
             c = (char)n;
             g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4); //FIXME handle XYVertex
@@ -161,8 +149,8 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         Point p = new Point(-1,-1);
 
         //correction for BORDERS and XYVertex
-        mx -= BORDERS;
-        my -= BORDERS;
+      //  mx -= BORDERS;
+      //  my -= BORDERS;
         if (XYVertex) mx += t;
 
         int x = (int) (mx / (s+t)); //this gives a quick value for x. It works only on odd cols and doesn't handle the triangle sections. It assumes that the hexagon is a rectangle with width s+t (=1.5*s).
@@ -191,7 +179,9 @@ http://www.tonypa.pri.ee/tbw/tut25.html
                 }
             }
         } else {  // odd columns
-            if (dy > h) {	//bottom half of hexes
+            if (dy > h)
+            {
+                //bottom half of hexes
                 if (dx * r/t < dy - h) {
                     x--;
                     y++;
