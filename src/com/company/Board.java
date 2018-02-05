@@ -24,17 +24,18 @@ public class Board {
 
     //constants and global variables
     final static Color COLOURBACK =  Color.WHITE;
-    final static Color COLOURCELL =  Color.ORANGE;
+    final static Color COLOURCELL =  new Color(255,0,0,1);
     final static Color COLOURGRID =  Color.BLACK;
     final static Color COLOURONE = new Color(255,255,255,200);
     final static Color COLOURONETXT = Color.BLUE;
     final static Color COLOURTWO = new Color(0,0,0,200);
     final static Color COLOURTWOTXT = new Color(255,100,255);
     final static int EMPTY = 0;
-    final static int BSIZE = 22;
-    final static int HEXSIZE = 66;
-    final static int BORDERS = 30;
-    final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
+    final static int BSIZE = 750;
+    final static int HEXSIZE = 22;
+    final static int BORDERS = 1;
+    final static int SCRSIZE = HEXSIZE * (BSIZE ) + BORDERS;
+
 
 
 
@@ -44,7 +45,6 @@ public class Board {
     void initGame(){
 
         Hex.setXYasVertex(false);
-
         Hex.setHeight(HEXSIZE);
         Hex.setBorders(BORDERS);
 
@@ -69,8 +69,8 @@ public class Board {
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
-        frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
-        frame.setResizable(true);
+        frame.setSize( 450, 500);
+        frame.setResizable(false);
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
     }
@@ -83,11 +83,9 @@ public class Board {
         public DrawingPanel()
         {
             setBackground(COLOURBACK);
-            image=(new javax.swing.ImageIcon(getClass().getResource("board.png"))).getImage();
-
+            image=(new javax.swing.ImageIcon(getClass().getResource("board2.png"))).getImage();
             MyMouseListener ml = new MyMouseListener();
             addMouseListener(ml);
-
         }
 
         public void paintComponent(Graphics g)
@@ -97,20 +95,18 @@ public class Board {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
             g2.drawImage(image, 0, 0,null);
             super.paintComponent(g2);
-            ImageIcon image_background = new ImageIcon(getClass().getResource("board.png"));
+            ImageIcon image_background = new ImageIcon(getClass().getResource("board2.png"));
 
-           // Image image = image_background.getImage(); // transform it
-           // Image newImg = image.getScaledInstance(800, 600,  Image.SCALE_SMOOTH); // scale it the smooth way
-           // ImageIcon lol = new ImageIcon(newImg);  // transform it back
-
-
+            Image image = image_background.getImage(); // transform it
+            Image newImg = image.getScaledInstance(image_background.getIconWidth(), image_background.getIconHeight(),  Image.SCALE_DEFAULT); // scale it the smooth way
+            ImageIcon lol = new ImageIcon(newImg);  // transform it back
 
             g.drawImage(image_background.getImage(), 0, 0, getWidth(), getHeight(), this);
 
             //Dessiner les hex
-           /* for (int i=0;i<BSIZE;i++) {
+           for (int i=0;i<BSIZE + 4;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    Hex.drawHex(i,j,g2);
+                    Hex.drawHex(i ,j,g2);
                 }
             }
             //Remplir les hex
@@ -118,7 +114,7 @@ public class Board {
                 for (int j=0;j<BSIZE;j++) {
                     Hex.fillHex(i,j,board[i][j],g2);
                 }
-            } */
+            }
         }
 
         class MyMouseListener extends MouseAdapter	{

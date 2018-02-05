@@ -10,7 +10,7 @@ private Image map;
 
 public MapPanel(){
     try {
-        this.map = ImageIO.read(getClass().getResourceAsStream("Images/board.png"));
+       // this.map = ImageIO.read(getClass().getResourceAsStream("Images/board.png"));
     }
     catch(Exception e){
         throw new RuntimeException(e);
