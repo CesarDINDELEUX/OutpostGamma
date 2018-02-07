@@ -13,13 +13,41 @@ import javax.swing.JMenuBar;
 import java.awt.event.*;
 
 
-class MenuActionListener implements ActionListener{
-    public void actionPerformed (ActionEvent e){
 
-    }
-        }
+
+
+
+
+
 
  class Board extends Panel{
+
+     class MyMenuItem extends JMenuItem
+             implements ActionListener {
+         public MyMenuItem(String text) {
+             super(text);
+             addActionListener(this);
+         }
+         public void actionPerformed(ActionEvent e) {
+             System.out.println("Item clicked: "+e.getActionCommand());
+             if (e.getActionCommand() == "Game Turn")
+             {
+                if(turn %2 == 0)
+                {
+                 
+                    createImpMenu(frame);
+                }
+                else {
+                    createIrdanMenu(frame);
+                }
+                turn += 1;
+
+             }
+         }
+     }
+
+
+
 
     List<Hex> listeHex;
     List<Irdan> listeIrdan;
@@ -46,7 +74,7 @@ class MenuActionListener implements ActionListener{
     final static int BORDERS = 30;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
     public int turn = 0;
-
+    public JFrame frame;
 
 
     int[][] board = new int[BSIZE][BSIZE];
@@ -71,7 +99,7 @@ class MenuActionListener implements ActionListener{
     public void createAndShowGUI()
     {
         DrawingPanel panel = new DrawingPanel();
-        JFrame frame = new JFrame("Outpost GAMMA");
+        frame = new JFrame("Outpost GAMMA");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
@@ -121,22 +149,22 @@ class MenuActionListener implements ActionListener{
          JMenu Menu = new JMenu("Menu");
 
          JMenu Unites = new JMenu("Unités");
-         JMenuItem Infantery = new JMenuItem("Infantery");
-         JMenuItem Lourd = new JMenuItem("Soldat Lourd");
-         JMenuItem Commandant = new JMenuItem("Commandant");
+         MyMenuItem Infantery = new MyMenuItem("Infantery");
+         MyMenuItem Lourd = new MyMenuItem("Soldat Lourd");
+         MyMenuItem Commandant = new MyMenuItem("Commandant");
 
          Unites.add(Infantery);
          Unites.add(Lourd);
          Unites.add(Commandant);
 
          JMenu Position = new JMenu("Positions");
-         JMenuItem Avance = new JMenuItem("Position Avancée");
-         JMenuItem Fortifie = new JMenuItem("Position Fortifié");
+         MyMenuItem Avance = new MyMenuItem("Position Avancée");
+         MyMenuItem Fortifie = new MyMenuItem("Position Fortifié");
 
          Position.add(Avance);
          Position.add(Fortifie);
 
-         JMenuItem end = new JMenuItem("Game Turn");
+         JMenuItem end = new MyMenuItem("Game Turn");
 
          Menu.add(Unites);
          Menu.add(Position);
@@ -145,7 +173,7 @@ class MenuActionListener implements ActionListener{
          JMenuBar menuBar = new JMenuBar();
          j.setJMenuBar(menuBar);
          menuBar.add(Menu);
-         Menu.addActionListener(new MenuActionListener());
+
 
 
      }
@@ -156,9 +184,9 @@ class MenuActionListener implements ActionListener{
         JMenuItem end = new JMenuItem("Game turn");
 
         JMenu Unites = new JMenu("Unités");
-        JMenuItem Irdan = new JMenuItem("Irdan rebelle");
-        JMenuItem shooter = new JMenuItem("Irdan Shooter");
-        JMenuItem leader = new JMenuItem(" Irdan Leader");
+        MyMenuItem Irdan = new MyMenuItem("Irdan rebelle");
+        MyMenuItem shooter = new MyMenuItem("Irdan Shooter");
+        MyMenuItem leader = new MyMenuItem(" Irdan Leader");
 
 
         Unites.add(Irdan);
@@ -172,17 +200,22 @@ class MenuActionListener implements ActionListener{
         j.setJMenuBar(menuBar);
         menuBar.add(Menu);
 
+
+
     }
 
 
 
-    public void ChangeTurn(JFrame j){
+    public void ChangeTurn()
+
+
+    {
         if (turn %2 == 0)
         {
-            createImpMenu(j);
+            createImpMenu(frame);
         }
         else {
-            createIrdanMenu(j);
+            createIrdanMenu(frame);
         }
         turn +=1;
     }
@@ -243,6 +276,8 @@ class MenuActionListener implements ActionListener{
             }
         }
 
+
+
         class MyMouseListener extends MouseAdapter	{
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
@@ -256,7 +291,6 @@ class MenuActionListener implements ActionListener{
                 // repaint();
             }
         }
-
 
     }
 }
