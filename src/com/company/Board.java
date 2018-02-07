@@ -12,6 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import java.awt.event.*;
 
+
+class MenuActionListener implements ActionListener{
+    public void actionPerformed (ActionEvent e){
+
+    }
+        }
+
  class Board extends Panel{
 
     List<Hex> listeHex;
@@ -38,7 +45,7 @@ import java.awt.event.*;
     final static int HEXSIZE = 35;
     final static int BORDERS = 30;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
-
+    public int turn = 0;
 
 
 
@@ -61,13 +68,15 @@ import java.awt.event.*;
 
 
 
-    private void createAndShowGUI()
+    public void createAndShowGUI()
     {
         DrawingPanel panel = new DrawingPanel();
         JFrame frame = new JFrame("Outpost GAMMA");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Container content = frame.getContentPane();
         content.add(panel);
+
+
 
 
         DrawingPanel panelMenu = new DrawingPanel();
@@ -89,58 +98,14 @@ import java.awt.event.*;
 
 
 
-
-
-
-
             if (result == JOptionPane.NO_OPTION) {
-                JMenuBar menuBar = new JMenuBar();
-                frame.setJMenuBar(menuBar);
-                JMenu Menu = new JMenu("Menu");
-
-                JMenu Unites = new JMenu("Unités");
-                JMenuItem Infantery = new JMenuItem("Infantery");
-                JMenuItem Lourd = new JMenuItem("Soldat Lourd");
-                JMenuItem Commandant = new JMenuItem("Commandant");
-
-                Unites.add(Infantery);
-                Unites.add(Lourd);
-                Unites.add(Commandant);
-
-                JMenu Position = new JMenu("Positions");
-                JMenuItem Avance = new JMenuItem("Position Avancée");
-                JMenuItem Fortifie = new JMenuItem("Position Fortifié");
-
-                Position.add(Avance);
-                Position.add(Fortifie);
-
-                JMenuItem end = new JMenuItem("Game Turn");
-
-                Menu.add(Unites);
-                Menu.add(Position);
-                Menu.add(end);
-                menuBar.add(Menu);
+                createImpMenu(frame);
+                turn = 1;
             }
             else
                 {
-                    JMenuBar menuBar = new JMenuBar();
-                    frame.setJMenuBar(menuBar);
-                    JMenu Menu = new JMenu("Menu");
-                    JMenuItem end = new JMenuItem("Game turn");
-
-                    JMenu Unites = new JMenu("Unités");
-                    JMenuItem Irdan = new JMenuItem("Irdan rebelle");
-                    JMenuItem shooter = new JMenuItem("Irdan Shooter");
-                    JMenuItem leader = new JMenuItem(" Irdan Leader");
-
-
-                    Unites.add(Irdan);
-                    Unites.add(shooter);
-                    Unites.add(leader);
-
-                    Menu.add(Unites);
-                    Menu.add(end);
-                    menuBar.add(Menu);
+                 createIrdanMenu(frame);
+                 turn = 2;
                 }
 
         frame.setSize(807, 813);
@@ -150,8 +115,77 @@ import java.awt.event.*;
     }
 
 
+     public void createImpMenu (JFrame j){
 
 
+         JMenu Menu = new JMenu("Menu");
+
+         JMenu Unites = new JMenu("Unités");
+         JMenuItem Infantery = new JMenuItem("Infantery");
+         JMenuItem Lourd = new JMenuItem("Soldat Lourd");
+         JMenuItem Commandant = new JMenuItem("Commandant");
+
+         Unites.add(Infantery);
+         Unites.add(Lourd);
+         Unites.add(Commandant);
+
+         JMenu Position = new JMenu("Positions");
+         JMenuItem Avance = new JMenuItem("Position Avancée");
+         JMenuItem Fortifie = new JMenuItem("Position Fortifié");
+
+         Position.add(Avance);
+         Position.add(Fortifie);
+
+         JMenuItem end = new JMenuItem("Game Turn");
+
+         Menu.add(Unites);
+         Menu.add(Position);
+         Menu.add(end);
+
+         JMenuBar menuBar = new JMenuBar();
+         j.setJMenuBar(menuBar);
+         menuBar.add(Menu);
+         Menu.addActionListener(new MenuActionListener());
+
+
+     }
+
+    public void createIrdanMenu(JFrame j){
+
+        JMenu Menu = new JMenu("Menu");
+        JMenuItem end = new JMenuItem("Game turn");
+
+        JMenu Unites = new JMenu("Unités");
+        JMenuItem Irdan = new JMenuItem("Irdan rebelle");
+        JMenuItem shooter = new JMenuItem("Irdan Shooter");
+        JMenuItem leader = new JMenuItem(" Irdan Leader");
+
+
+        Unites.add(Irdan);
+        Unites.add(shooter);
+        Unites.add(leader);
+
+        Menu.add(Unites);
+        Menu.add(end);
+
+        JMenuBar menuBar = new JMenuBar();
+        j.setJMenuBar(menuBar);
+        menuBar.add(Menu);
+
+    }
+
+
+
+    public void ChangeTurn(JFrame j){
+        if (turn %2 == 0)
+        {
+            createImpMenu(j);
+        }
+        else {
+            createIrdanMenu(j);
+        }
+        turn +=1;
+    }
 
     class menuaction extends  AbstractAction{
         @Override
@@ -176,7 +210,6 @@ import java.awt.event.*;
 
 
         }
-
 
 
         public void paintComponent(Graphics g)
