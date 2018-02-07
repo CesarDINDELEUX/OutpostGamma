@@ -1,34 +1,16 @@
 package com.company;
-
-import sun.net.dns.ResolverConfiguration;
-
-import java.beans.DesignMode;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JToolBar;
-import javax.swing.JComboBox;
-import javax.swing.JTextPane;
 import javax.swing.JPanel;
 import javax.swing.JMenu;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.KeyStroke;
-import javax.swing.border.BevelBorder;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.text.html.Option;
-import java.io.File;
 
  class Board extends Panel{
 
@@ -52,8 +34,8 @@ import java.io.File;
     final static Color COLOURTWO = new Color(0,0,0,200);
     final static Color COLOURTWOTXT = new Color(255,100,255);
     final static int EMPTY = 0;
-    final static int BSIZE = 22;
-    final static int HEXSIZE = 66;
+    final static int BSIZE = 400;
+    final static int HEXSIZE = 35;
     final static int BORDERS = 30;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3;
 
@@ -70,15 +52,11 @@ import java.io.File;
         Hex.setBorders(BORDERS);
 
         for (int i=0;i<BSIZE;i++) {
-            for (int j=0;j<BSIZE;j++) {
+            for (int j=0;j<BSIZE;j++)
+            {
                 board[i][j]=EMPTY;
             }
         }
-
-        //set up board here
-        //  board[3][3] = (int)'A';
-        //  board[4][3] = (int)'Q';
-        //  board[4][4] = -(int)'B';
     }
 
 
@@ -108,6 +86,8 @@ import java.io.File;
                    options,
                    options[0]);
         con.add(panelMenu);
+
+
 
 
 
@@ -163,14 +143,15 @@ import java.io.File;
                     menuBar.add(Menu);
                 }
 
-
-
-
-        frame.setSize( (int)(SCRSIZE/1.23), SCRSIZE);
-        frame.setResizable(true);
+        frame.setSize(807, 813);
+        frame.setResizable(false);
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
     }
+
+
+
+
 
     class menuaction extends  AbstractAction{
         @Override
@@ -216,7 +197,7 @@ import java.io.File;
             g.drawImage(image_background.getImage(), 0, 0, getWidth(), getHeight(), this);
 
             //Dessiner les hex
-           /* for (int i=0;i<BSIZE;i++) {
+            for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
                     Hex.drawHex(i,j,g2);
                 }
@@ -226,7 +207,7 @@ import java.io.File;
                 for (int j=0;j<BSIZE;j++) {
                     Hex.fillHex(i,j,board[i][j],g2);
                 }
-            } */
+            }
         }
 
         class MyMouseListener extends MouseAdapter	{

@@ -92,10 +92,9 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
         Polygon poly = hex(x,y);
-        g2.setColor(Board.COLOURCELL);
-        //g2.fillPolygon(hexmech.hex(x,y));
+     /*   g2.setColor(Board.COLOURCELL);
         g2.fillPolygon(poly);
-        g2.setColor(Board.COLOURGRID);
+        g2.setColor(Board.COLOURGRID); */
         g2.drawPolygon(poly);
     }
 
@@ -117,7 +116,7 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
         if (n < 0) {
-            g2.setColor(Board.COLOURONE);
+            g2.setColor(Board.COLOURTWO);
             g2.fillPolygon(hex(x,y));
             g2.setColor(Board.COLOURONETXT);
             c = (char)(-n);
