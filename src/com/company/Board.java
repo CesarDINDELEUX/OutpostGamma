@@ -148,7 +148,7 @@ import java.io.File;
                     JMenu Menu = new JMenu("Menu");
                     JMenuItem end = new JMenuItem("Game turn");
 
-                   JMenu Unites = new JMenu("Unités");
+                    JMenu Unites = new JMenu("Unités");
                     JMenuItem Irdan = new JMenuItem("Irdan rebelle");
                     JMenuItem shooter = new JMenuItem("Irdan Shooter");
                     JMenuItem leader = new JMenuItem(" Irdan Leader");
@@ -193,7 +193,10 @@ import java.io.File;
             MyMouseListener ml = new MyMouseListener();
             addMouseListener(ml);
 
+
         }
+
+
 
         public void paintComponent(Graphics g)
         {
